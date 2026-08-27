@@ -6,14 +6,20 @@ import { env } from "../config/env.js";
  * Safe to run multiple times — uses IF NOT EXISTS / checks before ALTER.
  */
 const run = async () => {
-  const connection = await mysql.createConnection({
+  const connectionOptions = {
     host: env.db.host,
     port: env.db.port,
     user: env.db.user,
     password: env.db.password,
     database: env.db.database,
     multipleStatements: true
-  });
+  };
+
+  if (env.nodeEnv === "production") {
+    connectionOptions.ssl = { rejectUnauthorized: true };
+  }
+
+  const connection = await mysql.createConnection(connectionOptions);
 
   console.log(`Connected to database: ${env.db.database}`);
 

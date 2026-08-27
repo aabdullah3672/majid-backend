@@ -18,13 +18,19 @@ const assertSafeDatabaseName = (database) => {
 const run = async () => {
   assertSafeDatabaseName(env.db.database);
 
-  const connection = await mysql.createConnection({
+  const connectionOptions = {
     host: env.db.host,
     port: env.db.port,
     user: env.db.user,
     password: env.db.password,
     multipleStatements: true
-  });
+  };
+
+  if (env.nodeEnv === "production") {
+    connectionOptions.ssl = { rejectUnauthorized: true };
+  }
+
+  const connection = await mysql.createConnection(connectionOptions);
 
   try {
     await connection.query(`CREATE DATABASE IF NOT EXISTS \`${env.db.database}\` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci`);

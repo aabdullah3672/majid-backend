@@ -1,7 +1,7 @@
 import mysql from "mysql2/promise";
 import { env } from "./env.js";
 
-export const pool = mysql.createPool({
+const poolOptions = {
   host: env.db.host,
   port: env.db.port,
   user: env.db.user,
@@ -11,7 +11,14 @@ export const pool = mysql.createPool({
   connectionLimit: 10,
   queueLimit: 0,
   decimalNumbers: true
-});
+};
+
+// Enable SSL for production (required by Aiven, PlanetScale, etc.)
+if (env.nodeEnv === "production") {
+  poolOptions.ssl = { rejectUnauthorized: true };
+}
+
+export const pool = mysql.createPool(poolOptions);
 
 export const query = async (sql, params = []) => {
   const [rows] = await pool.execute(sql, params);
