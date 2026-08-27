@@ -3,7 +3,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import bcrypt from "bcryptjs";
 import mysql from "mysql2/promise";
-import { categories, defaultReviews, products } from "../../../frontend/src/data/catalog.js";
+import { categories, defaultReviews, products } from "../data/catalog.js";
 import { env } from "../config/env.js";
 
 const __filename = fileURLToPath(import.meta.url);
