@@ -319,12 +319,12 @@ adminRoutes.post("/products", asyncHandler(async (req, res) => {
   const product = validateProductPayload(req.body);
   await query(`
     INSERT INTO products (
-      id, name, slug, category_slug, subcategory, subtitle, price, compare_at,
+      id, name, slug, category_slug, subcategory, subtitle, description, price, compare_at,
       badge, image, brand, is_new, is_active, created, featured, stock
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `, [
     product.id, product.name, product.slug, product.category, product.subcategory, product.subtitle,
-    product.price, product.compareAt, product.badge, product.image, product.brand,
+    product.description, product.price, product.compareAt, product.badge, product.image, product.brand,
     product.isNew ? 1 : 0, product.isActive ? 1 : 0, product.created, product.featured ? 1 : 0, product.stock
   ]);
   await replaceColors(product.id, product.colors);
@@ -339,12 +339,12 @@ adminRoutes.put("/products/:id", asyncHandler(async (req, res) => {
   const product = validateProductPayload({ ...req.body, id: req.params.id });
   const result = await query(`
     UPDATE products
-    SET name = ?, slug = ?, category_slug = ?, subcategory = ?, subtitle = ?, price = ?, compare_at = ?,
+    SET name = ?, slug = ?, category_slug = ?, subcategory = ?, subtitle = ?, description = ?, price = ?, compare_at = ?,
       badge = ?, image = ?, brand = ?, is_new = ?, is_active = ?, created = ?, featured = ?, stock = ?
     WHERE id = ? AND deleted_at IS NULL
   `, [
     product.name, product.slug, product.category, product.subcategory, product.subtitle,
-    product.price, product.compareAt, product.badge, product.image, product.brand,
+    product.description, product.price, product.compareAt, product.badge, product.image, product.brand,
     product.isNew ? 1 : 0, product.isActive ? 1 : 0, product.created, product.featured ? 1 : 0, product.stock,
     product.id
   ]);
@@ -703,6 +703,7 @@ const validateProductPayload = (body) => {
     category: cleanString(body.category),
     subcategory: cleanString(body.subcategory),
     subtitle: cleanString(body.subtitle),
+    description: body.description ? cleanString(body.description) : null,
     price,
     compareAt,
     badge: cleanString(body.badge),

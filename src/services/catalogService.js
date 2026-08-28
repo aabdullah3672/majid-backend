@@ -130,7 +130,7 @@ export const getProducts = async (filters = {}) => {
 
 export const getProductById = async (id) => {
   const rows = await query(`
-    SELECT p.id, p.name, p.slug, p.category_slug, p.subcategory, p.subtitle, p.price, p.compare_at,
+    SELECT p.id, p.name, p.slug, p.category_slug, p.subcategory, p.subtitle, p.description, p.price, p.compare_at,
       p.badge, p.image, p.brand, p.is_new, p.is_active, p.created, p.featured, p.stock, c.name AS category_name
     FROM products p
     INNER JOIN categories c ON c.slug = p.category_slug
@@ -167,6 +167,7 @@ export const mapProduct = (row, colorVariants = []) => ({
   categoryName: row.category_name,
   subcategory: row.subcategory,
   subtitle: row.subtitle,
+  description: row.description || null,
   price: row.price,
   compareAt: row.compare_at,
   badge: row.badge,

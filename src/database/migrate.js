@@ -28,6 +28,7 @@ const run = async () => {
     await addColumnIfNotExists(connection, "products", "slug", "VARCHAR(200) NULL AFTER name");
     await addColumnIfNotExists(connection, "products", "brand", "VARCHAR(120) NULL AFTER image");
     await addColumnIfNotExists(connection, "products", "is_new", "TINYINT(1) NOT NULL DEFAULT 0 AFTER brand");
+    await addColumnIfNotExists(connection, "products", "description", "TEXT NULL AFTER subtitle");
     await addColumnIfNotExists(connection, "products", "is_active", "TINYINT(1) NOT NULL DEFAULT 1 AFTER is_new");
     await addColumnIfNotExists(connection, "products", "deleted_at", "TIMESTAMP NULL DEFAULT NULL AFTER stock");
 
