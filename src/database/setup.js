@@ -139,7 +139,13 @@ const seedAdmin = async (connection) => {
   );
 };
 
-run().catch((error) => {
-  console.error(error);
-  process.exit(1);
-});
+export const runSetup = run;
+
+// Run directly when called as a script (npm run db:setup)
+const isDirectRun = process.argv[1] && import.meta.url.endsWith(process.argv[1].replace(/\\/g, "/"));
+if (isDirectRun) {
+  run().catch((error) => {
+    console.error(error);
+    process.exit(1);
+  });
+}
