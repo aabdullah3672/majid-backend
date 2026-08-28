@@ -5,7 +5,7 @@ import { asyncHandler } from "../middleware/asyncHandler.js";
 import { requireAuth, requireAdmin } from "../middleware/auth.js";
 import { badRequest, notFound } from "../utils/httpError.js";
 import { success, created } from "../utils/response.js";
-import { uploadFile, deleteLocalFile } from "../services/uploadService.js";
+import { uploadFile, deleteFile } from "../services/uploadService.js";
 
 export const productImageRoutes = Router({ mergeParams: true });
 
@@ -75,7 +75,7 @@ productImageRoutes.delete("/:imageId", requireAuth, requireAdmin, asyncHandler(a
   if (!rows.length) throw notFound("Image not found.");
 
   // Delete from disk
-  await deleteLocalFile(rows[0].url);
+  await deleteFile(rows[0].url, rows[0].public_id);
   await query("DELETE FROM product_images WHERE id = ?", [req.params.imageId]);
 
   return success(res, null, "Image deleted.");
