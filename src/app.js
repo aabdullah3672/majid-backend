@@ -50,12 +50,17 @@ app.use(generalLimiter);
 app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 
 // ─── Health Check ────────────────────────────────────────────────────────────
-app.get("/api/health", async (req, res, next) => {
+app.get("/api/health", async (req, res) => {
   try {
     await pool.query("SELECT 1");
     res.json({ success: true, message: "OK", data: { status: "ok", database: "connected" }, errors: null });
   } catch (error) {
-    next(error);
+    res.status(503).json({
+      success: false,
+      message: "Database connection failed",
+      data: { error: error.message, code: error.code },
+      errors: null
+    });
   }
 });
 
