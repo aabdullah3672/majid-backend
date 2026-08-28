@@ -357,6 +357,29 @@ adminRoutes.put("/products/:id", asyncHandler(async (req, res) => {
   return success(res, { product: products[0] }, "Product updated.");
 }));
 
+// ─── Save Product Images by URL (admin) ──────────────────────────────────────
+adminRoutes.post("/products/:id/images", asyncHandler(async (req, res) => {
+  const { images } = req.body;
+  if (!images || !images.length) throw badRequest("images array is required.");
+
+  const products = await query("SELECT id FROM products WHERE id = ? AND deleted_at IS NULL", [req.params.id]);
+  if (!products.length) throw notFound("Product not found.");
+
+  // Clear existing additional images and re-insert
+  await query("DELETE FROM product_images WHERE product_id = ?", [req.params.id]);
+
+  const inserted = [];
+  for (const [index, url] of images.entries()) {
+    const result = await query(
+      "INSERT INTO product_images (product_id, url, is_primary, sort_order) VALUES (?, ?, ?, ?)",
+      [req.params.id, url, index === 0 ? 1 : 0, index]
+    );
+    inserted.push({ id: result.insertId, url, isPrimary: index === 0 });
+  }
+
+  return success(res, { images: inserted }, `${inserted.length} image(s) saved.`);
+}));
+
 // Soft delete
 adminRoutes.delete("/products/:id", asyncHandler(async (req, res) => {
   const result = await query("UPDATE products SET deleted_at = NOW() WHERE id = ? AND deleted_at IS NULL", [req.params.id]);
