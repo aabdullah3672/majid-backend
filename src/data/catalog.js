@@ -2,54 +2,63 @@ export const categories = [
   {
     name: "Computer & Laptop Accessories",
     slug: "computer-laptop-accessories",
+    icon: "Laptop",
     image: "https://placehold.co/520x390/141922/39d0aa?text=Laptop+Gear",
     subcategories: ["Laptop Stands", "HDMI Cables", "USB Cables", "LAN Cables", "Converters", "Keyboard & Mouse", "Splitter & Switches", "HDD Cases", "USB Hubs", "Type C Hubs", "Networking", "Laptop Chargers"]
   },
   {
     name: "Mobile Accessories",
     slug: "mobile-accessories",
+    icon: "Smartphone",
     image: "https://placehold.co/520x390/141922/72a7ff?text=Mobile+Gear",
     subcategories: ["Microphones", "Power Bank", "Mobile Chargers", "Wireless Mobile Chargers", "Mobile Cables", "Mobile Holders", "Car Chargers", "Tripod Stands", "Stylus Pens", "Other Mobile Accessories"]
   },
   {
     name: "Audio",
     slug: "audio",
+    icon: "Headphones",
     image: "https://placehold.co/520x390/141922/ffb84d?text=Audio",
     subcategories: ["Earbuds", "Headphones", "Speakers", "Receivers / Transmitters", "Hands-free"]
   },
   {
     name: "Gaming Essentials",
     slug: "gaming-essentials",
+    icon: "Gamepad2",
     image: "https://placehold.co/520x390/141922/f76f8e?text=Gaming",
     subcategories: ["Controllers", "Cooling Pads", "RGB Accessories", "Gaming Cables"]
   },
   {
     name: "Cameras",
     slug: "cameras",
+    icon: "Camera",
     image: "https://placehold.co/520x390/141922/a6e35f?text=Cameras",
     subcategories: ["Webcams", "Action Cameras", "Camera Mounts"]
   },
   {
     name: "Smart Watches",
     slug: "smart-watches",
+    icon: "Watch",
     image: "https://placehold.co/520x390/141922/39d0aa?text=Smart+Watches",
     subcategories: ["Fitness Watches", "Calling Watches", "Watch Straps"]
   },
   {
     name: "TV Accessories",
     slug: "tv-accessories",
+    icon: "Tv",
     image: "https://placehold.co/520x390/141922/72a7ff?text=TV+Accessories",
     subcategories: ["TV Mounts", "Streaming Devices", "Remote Controls"]
   },
   {
     name: "Laptop Bags",
     slug: "laptop-bags",
+    icon: "Briefcase",
     image: "https://placehold.co/520x390/141922/ffb84d?text=Laptop+Bags",
     subcategories: ["Backpacks", "Sleeves", "Messenger Bags"]
   },
   {
     name: "Miscellaneous",
     slug: "miscellaneous",
+    icon: "Box",
     image: "https://placehold.co/520x390/141922/f4f7fb?text=Misc",
     subcategories: ["Cleaning Kits", "Adapters", "Desk Accessories"]
   }

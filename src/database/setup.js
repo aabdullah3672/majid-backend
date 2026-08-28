@@ -53,10 +53,10 @@ const run = async () => {
 const seedCategories = async (connection) => {
   for (const [categoryIndex, category] of categories.entries()) {
     await connection.execute(`
-      INSERT INTO categories (name, slug, image, sort_order)
-      VALUES (?, ?, ?, ?)
-      ON DUPLICATE KEY UPDATE name = VALUES(name), image = VALUES(image), sort_order = VALUES(sort_order)
-    `, [category.name, category.slug, category.image, categoryIndex]);
+      INSERT INTO categories (name, slug, icon, image, sort_order)
+      VALUES (?, ?, ?, ?, ?)
+      ON DUPLICATE KEY UPDATE name = VALUES(name), icon = VALUES(icon), image = VALUES(image), sort_order = VALUES(sort_order)
+    `, [category.name, category.slug, category.icon || null, category.image, categoryIndex]);
 
     const [rows] = await connection.execute("SELECT id FROM categories WHERE slug = ? LIMIT 1", [category.slug]);
     const categoryId = rows[0].id;
