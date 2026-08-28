@@ -16,7 +16,7 @@ const run = async () => {
   };
 
   if (env.nodeEnv === "production") {
-    connectionOptions.ssl = { rejectUnauthorized: true };
+    connectionOptions.ssl = { rejectUnauthorized: false };
   }
 
   const connection = await mysql.createConnection(connectionOptions);

@@ -15,7 +15,7 @@ const poolOptions = {
 
 // Enable SSL for production (required by Aiven, PlanetScale, etc.)
 if (env.nodeEnv === "production") {
-  poolOptions.ssl = { rejectUnauthorized: true };
+  poolOptions.ssl = { rejectUnauthorized: false };
 }
 
 export const pool = mysql.createPool(poolOptions);
