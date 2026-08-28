@@ -32,7 +32,12 @@ app.set("env", env.nodeEnv);
 
 // ─── Global Middleware ───────────────────────────────────────────────────────
 app.use(helmet({ crossOriginResourcePolicy: { policy: "cross-origin" } }));
-app.use(cors({ origin: env.clientOrigin, credentials: true }));
+app.use(cors({
+  origin: env.clientOrigin,
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+}));
 
 // Stripe webhook needs raw body for signature verification — must be before express.json()
 app.use("/api/v1/payments/stripe/webhook", express.raw({ type: "application/json" }));

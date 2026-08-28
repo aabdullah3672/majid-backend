@@ -355,7 +355,13 @@ async function addIndexIfNotExists(connection, table, indexName, definition) {
   }
 }
 
-run().catch((error) => {
-  console.error("Migration failed:", error.message);
-  process.exit(1);
-});
+export const runMigrations = run;
+
+// Run directly when called as a script (npm run db:migrate)
+const isDirectRun = process.argv[1] && import.meta.url.endsWith(process.argv[1].replace(/\\/g, "/"));
+if (isDirectRun) {
+  run().catch((error) => {
+    console.error("Migration failed:", error.message);
+    process.exit(1);
+  });
+}
